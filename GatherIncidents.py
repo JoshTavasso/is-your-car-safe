@@ -78,3 +78,4 @@ def create_relevant_indicent_json(lng, lat, radius):
     relevant_incident_dict = find_relevant_incidents(lng, lat, 1)
     with open('relevant_incidents.json', 'w') as file:
         json.dump(relevant_incident_dict, file)
+    
