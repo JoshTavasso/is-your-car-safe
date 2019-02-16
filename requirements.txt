@@ -1,5 +1,4 @@
-beautifulsoup4==4.6.1
-certifi==2018.8.13
+certifi==2018.11.29
 chardet==3.0.4
 Click==7.0
 Flask==1.0.2
@@ -8,7 +7,7 @@ idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.10
 MarkupSafe==1.1.0
-numpy==1.15.4
+numpy==1.16.1
 pandas==0.24.1
 python-dateutil==2.8.0
 pytz==2018.9
@@ -16,5 +15,4 @@ requests==2.21.0
 six==1.12.0
 sodapy==1.5.2
 urllib3==1.24.1
-virtualenv==16.4.0
 Werkzeug==0.14.1

@@ -1,6 +1,6 @@
 """
 app.py
-The script used for deploying this bot
+The script used for deploying this app
 """
 from flask import Flask, request, render_template
 
