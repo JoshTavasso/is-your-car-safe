@@ -75,10 +75,6 @@ Creates a json file containing the relevant incident information
 based on the lng, lat, and radius given
 """
 def create_relevant_indicent_json(lng, lat, radius):
-    relevant_incident_dict = find_relevant_incidents(-122.43776923177623, 37.75554069028438, 1)
+    relevant_incident_dict = find_relevant_incidents(lng, lat, 1)
     with open('relevant_incidents.json', 'w') as file:
         json.dump(relevant_incident_dict, file)
-
-# used for testing functions
-if __name__ == '__main__':
-    create_relevant_indicent_json(-122.43776923177623, 37.75554069028438, 1)
