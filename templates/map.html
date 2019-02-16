@@ -18,8 +18,12 @@
                 width: 400px;
             }
 	</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
 </head>
 <body>
+
     <!-- maps and places scripts -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYup8ip5-C6qCf1J6KIrP2hJg4yhB88Xk&callback=initMap&libraries=places" type="text/javascript"></script>
     <input id="input" type="text"></input>
@@ -39,15 +43,16 @@
        
 
 		function initMap(){
-
 			var options = {
 				zoom: 13,
-				center: {lat:37.7749, lng: -122.4194}
+				center: {lat:37.7749, lng: -122.4194},
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
             };
             //creating a new map
             //set up strict bounds for map to SF
     		var map = new google.maps.Map(document.getElementById('map'), options);
-
     		//Array
     		
             //takes in props object
@@ -117,15 +122,17 @@
                     //map = new google.maps.Map(document.getElementById('map'), options);
                     console.log(result);
                     addMarker(p);
-
+                    //set up JSON for flask to handle
+                    var location = result.geometry.location.toJSON();
+                    console.log(location);
+                    //call Flask function - returns JSON
+                    $.post("/", location);
+                    //get multiple JSON strings
+                    //create markers for each
                 }
-
-                //TODO add marker
+                
                 //TODO search for vehicle incidents - backend
-                //result.geometry.location.toJSON();
                 //TODO back end code
-                //TODO clear old markers
-                //TODO make new markers
             });
         }
 
