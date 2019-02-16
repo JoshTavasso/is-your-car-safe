@@ -35,7 +35,7 @@
     
     4b. Put csv file into project folder and rename to "calls.csv".
     
-    4c. Run "python3 buildDataSet.py".
+    4c. Run python BuildDataSet.py
     
     4d. Vehicle related incident data set will be stored in "vehicles.csv".
     
