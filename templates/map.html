@@ -82,6 +82,8 @@
     		//{lat: int, lng: ing}
     		function addMarker(props)
     		{
+                //delete any existing markers
+                //zoom in on marker
     			console.log(props.coords);
     			var markers = new google.maps.Marker({
     			position: props.coords,
@@ -100,35 +102,38 @@
 	    			markers.addListener('click', function(){
 	    			infoWindow.open(map, markers)});
     			}
-    			// set SF boundaries;
-            	var SFboundaries;
 
-           		field = new google.maps.places.Autocomplete(document.getElementById('input'));
-            	field.bindTo('bounds', map);
-            	field.setFields(['geometry', 'name']);
-                field.addListener("place_changed", function() {
-                    result = field.getPlace();
-                    if (!result.geometry) {
-                        window.alert("No details available for input: '" + place.name + "'");
-                        return;
-                    } else {
-                        props.coords = result.geometry.LatLng;
-                        props.content = result.name;
-                        console.log(props.coords.lat(), props.coords.lng(), props.content);
-                        addMarker(props);
-                    }
-                    //TODO add marker
-
-                    //TODO search for vehicle incidents - backend
-                    //result.geometry.location.toJSON();
-                    //TODO back end code
-                    //TODO clear old markers
-                    //TODO make new markers
-                });
     		}
-        }
+            // set SF boundaries;
 
-            //if user selects from results list, place that into field
+            //set up text field
+            var SFboundaries;
+            var input = document.getElementById('input');
+
+            field = new google.maps.places.Autocomplete(input);
+            field.bindTo('bounds', map);
+            field.setFields(['geometry', 'name']);
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+
+            field.addListener("place_changed", function() {
+                result = field.getPlace();
+                if (!result.geometry) {
+                    window.alert("No details available for input: '" + place.name + "'");
+                    return;
+                } else {
+                    var p = new props(result.geometry.location.lat(), result.geometry.location.lng(), result.name);
+                    console.log(result);
+                    addMarker(p);
+                }
+                //TODO add marker
+
+                //TODO search for vehicle incidents - backend
+                //result.geometry.location.toJSON();
+                //TODO back end code
+                //TODO clear old markers
+                //TODO make new markers
+            });
+        }
 
     </script>
 
