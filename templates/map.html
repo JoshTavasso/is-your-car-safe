@@ -33,6 +33,11 @@
         };
         //Place object with lat and long
         var result;
+        var markers = [];
+
+
+       
+
 		function initMap(){
 
 			var options = {
@@ -44,14 +49,14 @@
     		var map = new google.maps.Map(document.getElementById('map'), options);
 
     		//Array
-    		var markers = [];
+    		
             //takes in props object
     		function addMarker(props)
     		{
                 //delete any existing markers
                 //zoom in on marker
-    			console.log(props.coords);
-    			var markers = new google.maps.Marker({
+    			//console.log(props.coords);
+    			var marker = new google.maps.Marker({
     			position: props.coords,
     			map: map
     			//used to set a custom icon
@@ -65,11 +70,27 @@
 	    			content: props.content
 	    			});
 
-	    			markers.addListener('click', function(){
-	    			infoWindow.open(map, markers)});
+	    			marker.addListener('click', function(){
+	    			infoWindow.open(map, marker)});
     			}
 
-    		}
+                markers.push(marker);
+
+    		};
+
+            function deleteMarkers(map)
+            {
+                for(var i = 0; i < markers.length; ++i)
+                {
+                    markers[i].setMap(map);
+                }
+            
+            };
+        
+            function clearMarkers()
+            {
+                deleteMarkers(null);  
+            };
             // set SF boundaries;
 
             //set up text field
@@ -82,14 +103,21 @@
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
             field.addListener("place_changed", function() {
+
                 result = field.getPlace();
                 if (!result.geometry) {
                     window.alert("No details available for input: '" + place.name + "'");
                     return;
                 } else {
+                    clearMarkers();
                     var p = new props(result.geometry.location.lat(), result.geometry.location.lng(), result.name);
+                    options.center = {lat: result.geometry.location.lat(), lng:result.geometry.location.lng()};
+                    options.zoom = 15;
+                    map.panTo(options.center);
+                    //map = new google.maps.Map(document.getElementById('map'), options);
                     console.log(result);
                     addMarker(p);
+
                 }
 
                 //TODO add marker
