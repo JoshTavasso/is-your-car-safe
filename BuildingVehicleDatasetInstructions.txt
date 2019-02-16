@@ -1,6 +1,0 @@
-Instructions on how to get the updated vehicle related incident data set:
-1. Export csv file of all police incidents from https://data.sfgov.org/Public-Safety/Police-Department-Calls-for-Service/hz9m-tj6z.
-2. Put csv file into project folder and rename to "calls.csv".
-3. Run "python3 buildDataSet.py".
-4. Vehicle related incident data set will be stored in "vehicles.csv".
-5. Remove "calls.csv" because it is a very large file. :)
