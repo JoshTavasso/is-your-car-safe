@@ -6,8 +6,12 @@
     <title>Is your car safe?</title>
 	<style>
 			#map{
-				height:400px;
-				width:100%;
+				height:100%;
+				width: 100%;
+			}
+			body, html{
+				height: 100%;
+				width: 100%
 			}
 	</style>
 </head>
@@ -19,12 +23,72 @@
 	<div id="map"></div>
 	<script>
 		//function the api key calls
+		/*
+		var coords = {
+			lat: 0;
+			lng: 0;
+			setLat function(){}
+		}
+
+		var props = {
+			coords: {},
+			content: ''
+		};
+*/
 		function initMap(){
 			var options = {
 				zoom: 8,
-				center: {lat:37.7749, lng: 122.4194}
+				center: {lat:37.7749, lng: -122.4194}
             };
+            //creating a new map
+
     		var map = new google.maps.Map(document.getElementById('map'), options);
+
+    		//Array
+    		var markers = [
+    			{coords:{lat:37.8199, lng: -122.4783},
+    			content: '<h1> Golden Gate Bridge </h1>'
+    			//adding a new data memeber to the object
+    			//,iconImage:	
+    			},
+    			{coords:{lat:37.7793, lng: -122.4193}}
+    		];
+
+    		//looping through markers
+    		for(var i = 0; i < markers.length; ++i)
+    		{
+    			addMarker(markers[i]);
+    		}
+    		
+    		
+    		//add marker function takes in lat and long
+    		//{lat: int, lng: ing}
+    		function addMarker(props)
+    		{
+    			var markers = new google.maps.Marker({
+    			position: props.coords,
+    			map: map
+    			//used to set a custom icon
+    			//icon:
+    			});
+
+    			//check content
+    			if(props.content)
+    			{
+    				var infoWindow = new google.maps.InfoWindow({
+	    			content: props.content
+	    			});
+
+	    			markers.addListener('click', function(){
+	    			infoWindow.open(map, markers)});
+    			}
+    			/*
+    			use to check for null images
+    			if(props.iconImage){
+					marker.setIcon(props.iconImage)
+    			}
+    			*/
+    		}
         }
     </script>
 </body>
