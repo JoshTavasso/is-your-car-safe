@@ -4,6 +4,7 @@ The script used for deploying this app
 """
 from flask import Flask, request, render_template
 import GatherIncidents
+import json
 
 app = Flask(__name__)
 
@@ -14,10 +15,16 @@ def index():
 
 @app.route('/results', methods=['GET', 'POST'])
 def get_lat_long():
-	jsdata = request.get_json(force=True)
-	print(jsdata)
-	GatherIncidents.create_relevant_indicent_json(float(jsdata["lng"]), float(jsdata["lat"]), 1)
-	return 'OK'
+	if request.method == 'POST':
+		jsdata = request.get_json(force=True)
+		print(jsdata)
+		GatherIncidents.create_relevant_indicent_json(float(jsdata["lng"]), float(jsdata["lat"]), 1)
+		return 'OK'
+	else:
+		with open('relevant_incidents.json', 'r') as file:
+			data = json.loads(file.read())
+		return json.dumps(data)
+
 
 # running server/application
 if __name__ == '__main__':

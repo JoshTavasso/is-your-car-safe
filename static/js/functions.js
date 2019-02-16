@@ -199,7 +199,6 @@ function initMap(){
             //     addMarker(p);
             // {% endfor %}
             var results = $.get("/results");
-            console.log("results: ", results);
         }
     });
 
