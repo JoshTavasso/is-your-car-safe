@@ -6,14 +6,26 @@ function props(newLat,newLng,newContent)
 //Place object with lat and long
 var result;
 var markers = [];
-
+var circle;
 function initMap(){
+    //remove clutter on map
+    var mapStyles = [
+        {
+            featureType: 'poi',
+            stylers: [{visibility: 'off'}]
+        },
+        {
+            featureType: 'transit',
+            stylers: [{visibility: "off"}]
+        }
+    ];
     var options = {
         zoom: 13,
         center: {lat:37.7749, lng: -122.4194},
         mapTypeControl: false,
         streetViewControl: false,
-        fullscreenControl: false
+        fullscreenControl: false,
+        styles: mapStyles
     };
     //creating a new map
     //set up strict bounds for map to SF
@@ -43,9 +55,7 @@ function initMap(){
             marker.addListener('click', function(){
             infoWindow.open(map, marker)});
         }
-
         markers.push(marker);
-
     };
 
     function deleteMarkers(map)
@@ -81,19 +91,35 @@ function initMap(){
             var p = new props(result.geometry.location.lat(), result.geometry.location.lng(), result.name);
             options.center = {lat: result.geometry.location.lat(), lng:result.geometry.location.lng()};
 
-            options.zoom = 15;
+            map.setZoom(18);
             map.panTo(options.center);
             //map = new google.maps.Map(document.getElementById('map'), options);
             console.log(result);
             addMarker(p);
+
+            //create circle at this location
+            delete circle;
+            circle = new google.maps.Circle(
+                {   center: p.coords,
+                    strokeColor: 'blue',
+                    strokeOpacity: 0.5,
+                    strokeWeight: 1,
+                    fillColor: 'blue',
+                    editable: false,
+                    draggable: false,
+                    fillOpacity: 0.3,
+                    map: map,
+                    radius: 100
+                }
+            );
             //set up JSON for flask to handle
             var location = result.geometry.location.toJSON();
-            console.log(location);
+            console.log("location: ", location);
             //call Flask function - returns JSON
             $.post("/results", location);
             input.value = "";
             var results = $.get("/results");
-            console.log(results);
+            console.log("results: ", results);
             //get multiple JSON strings
             //create markers for each
         }
@@ -101,4 +127,8 @@ function initMap(){
         //TODO search for vehicle incidents - backend
         //TODO back end code
     });
+    function createCircle() {
+        //delete existing circle
+        //create one at current map location
+    }
 }
