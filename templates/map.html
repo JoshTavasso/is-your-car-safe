@@ -125,6 +125,8 @@
                     //call Flask function - returns JSON
                     $.post("/results", location);
                     input.value = "";
+                    var results = $.get("/results");
+                    console.log(results);
                     //get multiple JSON strings
                     //create markers for each
                 }
