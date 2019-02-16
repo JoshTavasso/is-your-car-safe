@@ -98,9 +98,7 @@ function initMap(){
             addMarker(p);
 
             //create circle at this location
-            if (circle != null)
-                circle.setMap(null);
-
+            delete circle;
             circle = new google.maps.Circle(
                 {   center: p.coords,
                     strokeColor: 'blue',
@@ -118,7 +116,15 @@ function initMap(){
             var location = result.geometry.location.toJSON();
             console.log("location: ", location);
             //call Flask function - returns JSON
-            $.post("/results", location);
+            $.ajax({
+                url: "/results",
+                type: "POST",
+                data: JSON.stringify(location),
+                success: function(data, textStatus, jqXHR) {
+                },
+                contentType: "application/json",
+                dataType: "json"
+            });
             input.value = "";
             var results = $.get("/results");
             console.log("results: ", results);
