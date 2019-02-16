@@ -14,8 +14,9 @@
 				width: 100%
 			}
             #input {
-                margin: 10px 10px 0px 0px;
+                margin: 30px 10px 0px 0px;
                 width: 400px;
+                height: 20px;
             }
 	</style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -39,9 +40,6 @@
         var result;
         var markers = [];
 
-
-       
-
 		function initMap(){
 			var options = {
 				zoom: 13,
@@ -54,7 +52,7 @@
             //set up strict bounds for map to SF
     		var map = new google.maps.Map(document.getElementById('map'), options);
     		//Array
-    		
+
             //takes in props object
     		function addMarker(props)
     		{
@@ -89,16 +87,15 @@
                 {
                     markers[i].setMap(map);
                 }
-            
+
             };
-        
+
             function clearMarkers()
             {
-                deleteMarkers(null);  
+                deleteMarkers(null);
             };
             // set SF boundaries;
 
-            //set up text field
             var SFboundaries;
             var input = document.getElementById('input');
 
@@ -126,12 +123,12 @@
                     var location = result.geometry.location.toJSON();
                     console.log(location);
                     //call Flask function - returns JSON
-                    $.post("", location);
+                    $.post("/results", location);
                     input.value = "";
                     //get multiple JSON strings
                     //create markers for each
                 }
-                
+
                 //TODO search for vehicle incidents - backend
                 //TODO back end code
             });
