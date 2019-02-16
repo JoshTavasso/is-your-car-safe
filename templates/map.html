@@ -17,16 +17,43 @@
 
 	<h1>My Google Map</h1>
 	<div id="map"></div>
+    <!-- TODO add Bootstrap to make input nicer -->
 	<script>
 		//function the api key calls
+        var field;
+        //Place object with lat and long
+        var result;
 		function initMap(){
 			var options = {
 				zoom: 8,
 				center: {lat:37.7749, lng: 122.4194}
             };
     		var map = new google.maps.Map(document.getElementById('map'), options);
+
+            //set SF boundaries
+            var SFboundaries;
+
+            field = new google.maps.places.Autocomplete(document.getElementById('input'));
+            field.bindTo('bounds', map);
+            field.setFields(['geometry', 'name']);
         }
+        //if user selects from results list, place that into field
+        field.addListener("place_changed", function() {
+            result = Autocomplete.getPlace(field);
+            if (!result.geometry) {
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+            }
+            //TODO add marker
+            //TODO search for vehicle incidents - backend
+            //TODO back end code
+            //TODO clear old markers
+            //TODO make new markers
+        });
+
     </script>
+
+
 </body>
 
 </html>
