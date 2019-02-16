@@ -26,60 +26,26 @@
 	<div id="map"></div>
     <!-- TODO add Bootstrap to make input nicer -->
 	<script>
-        function coords(newLat, newLng)
-        {
-            this.lat = newLat,
-            this.lng = newLng
-        };
         function props(newLat,newLng,newContent)
         {
             this.coords = {lat: newLat, lng: newLng},
             this.information = newContent;
         };
-
-        var field;
         //Place object with lat and long
         var result;
 		function initMap(){
+
 			var options = {
-				zoom: 8,
+				zoom: 13,
 				center: {lat:37.7749, lng: -122.4194}
             };
             //creating a new map
-
+            //set up strict bounds for map to SF
     		var map = new google.maps.Map(document.getElementById('map'), options);
 
     		//Array
-    		/*
-    		var markers = [
-    			{coords:{lat:37.8199, lng: -122.4783},
-    			content: '<h1> Golden Gate Bridge </h1>'
-    			//adding a new data memeber to the object
-    			//,iconImage:
-    			},
-    			{coords:{lat:37.7793, lng: -122.4193}}
-    		];
-			*/
-    		var test1 = new props(37.7793,-122.4193, '<h1> Golden Gate Bridge </h1>');
-    		//test1.setCoords(37.87199,-122.4783);
-    		//test1.setContent('<h1> Golden Gate Bridge');
-
-    		var test2 = new props(37.7793,-122.4193, '<h2> hi </h2>');
-    		//test1.setCoords(37.7793,-122.4193);
-
-    		var markers = [
-    			test1, test2,{coords:{lat:37.7793, lng: -122.4193}}
-    		];
-
-    		//looping through markers
-    		for(var i = 0; i < markers.length; ++i)
-    		{
-    			addMarker(markers[i]);
-    			//console.log(markers[i].coords);
-    			//console.log(markers[i].information);
-    		}
-    		//add marker function takes in lat and long
-    		//{lat: int, lng: ing}
+    		var markers = [];
+            //takes in props object
     		function addMarker(props)
     		{
                 //delete any existing markers
@@ -110,7 +76,7 @@
             var SFboundaries;
             var input = document.getElementById('input');
 
-            field = new google.maps.places.Autocomplete(input);
+            var field = new google.maps.places.Autocomplete(input);
             field.bindTo('bounds', map);
             field.setFields(['geometry', 'name']);
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
@@ -125,6 +91,7 @@
                     console.log(result);
                     addMarker(p);
                 }
+
                 //TODO add marker
 
                 //TODO search for vehicle incidents - backend
