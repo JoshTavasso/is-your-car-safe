@@ -126,7 +126,8 @@
                     var location = result.geometry.location.toJSON();
                     console.log(location);
                     //call Flask function - returns JSON
-                    $.post("/", location);
+                    $.post("", location);
+                    input.value = "";
                     //get multiple JSON strings
                     //create markers for each
                 }
