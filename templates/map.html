@@ -13,29 +13,30 @@
 				height: 100%;
 				width: 100%
 			}
+            #input {
+                margin: 10px 10px 0px 0px;
+                width: 400px;
+            }
 	</style>
 </head>
 <body>
     <!-- maps and places scripts -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYup8ip5-C6qCf1J6KIrP2hJg4yhB88Xk&callback=initMap&libraries=places" type="text/javascript"></script>
-
-	<h1>My Google Map</h1>
+    <input id="input" type="text"></input>
 	<div id="map"></div>
     <!-- TODO add Bootstrap to make input nicer -->
 	<script>
 		//function the api key calls
-		/*
 		var coords = {
-			lat: 0;
-			lng: 0;
-			setLat function(){}
-		}
+			lat: 0,
+			lng: 0,
+		};
 
 		var props = {
 			coords: {},
 			content: ''
 		};
-*/
+
         var field;
         //Place object with lat and long
         var result;
@@ -53,7 +54,7 @@
     			{coords:{lat:37.8199, lng: -122.4783},
     			content: '<h1> Golden Gate Bridge </h1>'
     			//adding a new data memeber to the object
-    			//,iconImage:	
+    			//,iconImage:
     			},
     			{coords:{lat:37.7793, lng: -122.4193}}
     		];
@@ -63,8 +64,6 @@
     		{
     			addMarker(markers[i]);
     		}
-    		
-    		
     		//add marker function takes in lat and long
     		//{lat: int, lng: ing}
     		function addMarker(props)
@@ -94,27 +93,35 @@
     			*/
 
     		}
-            //set SF boundaries
+            //Set up AutoComplete text field
             var SFboundaries;
-
-            field = new google.maps.places.Autocomplete(document.getElementById('input'));
+            input = document.getElementById('input');
+            field = new google.maps.places.Autocomplete(input);
             field.bindTo('bounds', map);
-            field.setFields(['geometry', 'name']);
-        }
-        //if user selects from results list, place that into field
-        field.addListener("place_changed", function() {
-            result = Autocomplete.getPlace(field);
-            if (!result.geometry) {
-                window.alert("No details available for input: '" + place.name + "'");
-                return;
-            }
-            //TODO add marker
-            //TODO search for vehicle incidents - backend
-            //TODO back end code
-            //TODO clear old markers
-            //TODO make new markers
-        });
+            field.setFields(['address_components', 'geometry', 'name']);
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
+            //if user selects from results list, place that into field
+            field.addListener("place_changed", function() {
+                result = field.getPlace();
+                if (!result.geometry) {
+                    window.alert("No details available for input: '" + place.name + "'");
+                    return;
+                } else {
+                    props.coords = result.geometry.LatLng;
+                    props.content = result.name;
+                    console.log(props.coords.lat(), props.coords.lng(), props.content);
+                    addMarker(props);
+                }
+                //TODO add marker
+
+                //TODO search for vehicle incidents - backend
+                //result.geometry.location.toJSON();
+                //TODO back end code
+                //TODO clear old markers
+                //TODO make new markers
+            });
+        }
     </script>
 
 
