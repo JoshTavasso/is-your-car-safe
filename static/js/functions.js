@@ -25,7 +25,13 @@ function updateInputBox(){
 }
 
 function sendRequest(l) {
+    //clear all existing markers
     clearMarkers();
+
+    //add marker for parking spot
+    addMarker(
+        new props( circle.getCenter().lat(), circle.getCenter().lng()));
+
     var location = l.toJSON();
     location.radius = circle.getRadius();
     $.ajax({
@@ -37,15 +43,16 @@ function sendRequest(l) {
         contentType: "application/json",
         dataType: "json"
     });
-
      $.get("/results", function(data) {
         incidents = JSON.parse(data);
 
         for (var i in incidents) {
-            console.log(i);
-            p = new props(incidents[i].latitude, incidents[i].longitude, incidents[i].description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
+            console.log("location: ", incidents[i].latitude, " + ", incidents[i].longitude);
+            var p = new props(incidents[i].latitude, incidents[i].longitude, incidents[i].description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
             addMarker(p);
         }
+        //test marker
+        addMarker(        new props( circle.getCenter().lat(), circle.getCenter().lng(), "FOK ME", 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'));
     });
 }
 function addMarker(props)
@@ -73,8 +80,8 @@ function addMarker(props)
 
     }
     markers.push(marker);
-    google.maps.event.addListener(infoWindow,'closeclick',function(){
-
+    if (infoWindow)
+        google.maps.event.addListener(infoWindow,'closeclick',function(){
     });
 };
 function deleteMarkers(map)
@@ -215,7 +222,7 @@ function initMap(){
             return;
         } else {
             var p = new props(result.geometry.location.lat(), result.geometry.location.lng(), result.name);
-            
+
             options.center = {lat: result.geometry.location.lat(), lng:result.geometry.location.lng()};
 
             map.setZoom(16);
@@ -242,6 +249,7 @@ function initMap(){
                     }
                 );
             //populate circle with data
+
             sendRequest(circle.getCenter());
         }
     });
