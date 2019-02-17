@@ -110,10 +110,10 @@ function initMap(){
         });
 
         //check content
-        if(props.content)
+        if(props.information)
         {
             var infoWindow = new google.maps.InfoWindow({
-            content: props.content
+            content: props.information
             });
 
             marker.addListener('click', function(){
