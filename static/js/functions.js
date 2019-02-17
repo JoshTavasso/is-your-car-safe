@@ -148,13 +148,15 @@ function initMap(){
     // set SF boundaries;
     var SFboundaries;
     var input = document.getElementById('input');
-
+    var slider = document.getElementById('slidecontainer');
     //set up autocomplete box
     var field = new google.maps.places.Autocomplete(input);
     field.bindTo('bounds', map);
     field.setFields(['geometry', 'name']);
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(slider);
 
+    //slider stuff
     //main area of functionality
     field.addListener("place_changed", function() {
         result = field.getPlace();
@@ -169,7 +171,6 @@ function initMap(){
             map.setZoom(18);
             map.panTo(options.center);
             //map = new google.maps.Map(document.getElementById('map'), options);
-            console.log(result);
             addMarker(p);
             input.value = "";
 
@@ -179,20 +180,20 @@ function initMap(){
             else
                 circle = new google.maps.Circle(
                     {   center: p.coords,
-                        strokeColor: 'blue',
+                        strokeColor: '113F55',
                         strokeOpacity: 0.5,
                         strokeWeight: 1,
-                        fillColor: 'blue',
+                        fillColor: '23576F',
                         editable: false,
                         draggable: false,
                         fillOpacity: 0.3,
                         map: map,
-                        radius: 100
+                        radius: 300
                     }
                 );
             //set up JSON for flask to handle
             var location = result.geometry.location.toJSON();
-            console.log("location: ", location);
+            location.radius = circle.getRadius();
             //call Flask function - returns JSON
             $.ajax({
                 url: "/results",
@@ -203,11 +204,7 @@ function initMap(){
                 contentType: "application/json",
                 dataType: "json"
             });
-            //get results from url - results
-            // <% for r in {{results}} %}
-            //     p = new Props(r.latitude, r.longitude, r.description);
-            //     addMarker(p);
-            // {% endfor %}
+
             var text = "default values";
             var results = $.get("/results", function(data) {
                 incidents = JSON.parse(data);
