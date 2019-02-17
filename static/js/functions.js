@@ -171,7 +171,7 @@ function initMap(){
 
     function updateInputBox(){
         var slider = document.getElementById("myRange")
-        inputBoxSlider.value = slider.value;
+        inputBoxSlider.value = parseInt(slider.value);
          console.log(inputBoxSlider.value, " ", slider.value);
     }
     //slider stuff
