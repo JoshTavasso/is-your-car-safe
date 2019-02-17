@@ -1,7 +1,8 @@
-function props(newLat,newLng,newContent)
+function props(newLat,newLng,newContent, iconURL)
 {
     this.coords = {lat: newLat, lng: newLng},
     this.information = newContent;
+    this.icon = iconURL
 };
 //Place object with lat and long
 var result;
@@ -200,13 +201,12 @@ function initMap(){
             // {% endfor %}
             var text = "default values";
             var results = $.get("/results", function(data) {
-                console.log("Success");
-                for (var incident in data) {
-                    console.log(incident.category);
+                incidents = JSON.parse(data);
+                for (var i in incidents) {
+                    p = new props(parseFloat(i.latitude), parseFloat(i.longitude), i.description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
+                    addMarker(p);
                 }
-
             });
-            console.log("failure");
         }
     });
 

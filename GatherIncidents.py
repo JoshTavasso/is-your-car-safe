@@ -55,6 +55,7 @@ def find_relevant_incidents(lng, lat, radius):
         longitude = float(row[24])
         latitude = float(row[23])
         if count < 10 and haversine(lng, lat, longitude, latitude) <= radius:
+            count += 1
             incident_id = int(row[7])
             incident_date = row[1]
             incident_category = row[14]
