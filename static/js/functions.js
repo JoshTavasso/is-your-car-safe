@@ -18,9 +18,11 @@ function changeCircle() {
 }
 
 function updateInputBox(){
-    var slider = document.getElementById("myRange")
-    inputBoxSlider.value = parseInt(slider.value);
-    slider.html = inputBoxSlider.value;
+    var inbox = document.getElementById("input-for-slide");
+    var slider = document.getElementById("myRange");
+    inbox.value = parseInt(slider.value);
+    console.log(slider.value , " ", inbox.value);
+    //slider.html = inputBoxSlider.value;
     //TODO change slider value and slider position as well
 }
 
@@ -53,7 +55,6 @@ function sendRequest(l) {
             addMarker(p);
         }
         //test marker
-        addMarker(        new props( circle.getCenter().lat(), circle.getCenter().lng(), "FOK ME", 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'));
     });
 }
 function addMarker(props)

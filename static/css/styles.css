@@ -7,17 +7,19 @@
             width: 100%
         }
         #input {
-            margin: 30px 10px 0px 0px;
+            margin: 30px 20px 0px 0px;
             width: 400px;
             height: 20px;
         }
-        #input-for-slider{
-                margin: 30px 10px 0px 0px;
-                width: 400px;
+        
+        #input-for-slide{
+                margin-left: 20px;
+                width: 50px;
                 height: 20px;
         }
+        
         .slidecontainer {
-            width: 30%; /* Width of the outside container */
+            width: 10%; /* Width of the outside container */
         }
 
         /* The slider itself */
