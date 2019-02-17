@@ -3,9 +3,6 @@ import json
 import math
 from collections import defaultdict
 
-RADIUS_STEP = 500
-ACCIDENT_PER_STEP = 10
-
 """
     The "Haversine" formula:
     Calculates the great circle distance in miles between two locations given their respective
@@ -50,8 +47,6 @@ def find_relevant_incidents(lng, lat, radius):
         next(reader)
 
     relevant_incidents = defaultdict(dict)
-    count = 0
-    limit = (radius/RADIUS_STEP) * ACCIDENT_PER_STEP
     for row in reader:
         # if the data set row is missing a latitude or longitude
         if row[24] == "" or row[23] == "":
@@ -59,8 +54,7 @@ def find_relevant_incidents(lng, lat, radius):
         longitude = float(row[24])
         latitude = float(row[23])
         # convert radius from meters to kilometers
-        if count < limit and haversine(lng, lat, longitude, latitude) <= (radius/1000):
-            count += 1
+        if haversine(lng, lat, longitude, latitude) <= (radius/1000):
             incident_id = int(row[7])
             incident_date = row[1]
             incident_category = row[14]

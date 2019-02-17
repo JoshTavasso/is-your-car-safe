@@ -48,13 +48,23 @@ function sendRequest(l) {
      });
      $.get("/results", function(data) {
         incidents = JSON.parse(data);
-
+        var length = 0;
         for (var i in incidents) {
             console.log("location: ", incidents[i].latitude, " + ", incidents[i].longitude);
             var p = new props(incidents[i].latitude, incidents[i].longitude, incidents[i].description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
             addMarker(p);
+            length++;
         }
-        //test marker
+
+        // Calculate ratio of safety:
+        var area = Math.PI * circle.getRadius() * circle.getRadius();
+        console.log(length, circle.getRadius());
+        if (length/circle.getRadius() <= 0.20)
+            alert("YOUR PARKING SPOT IS QUITE SAFE WOW. YOUR COOKIES ARE PROTECTED!!!!!!");
+        else if (length/circle.getRadius() <= 0.50)
+            alert("YOU MIGHT WANT TO PARK SOMEWHERE ELSE!");
+        else
+            alert("YOUR CAR IS ALREADY STOLEN");
     });
 }
 function addMarker(props)
