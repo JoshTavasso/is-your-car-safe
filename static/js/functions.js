@@ -148,7 +148,9 @@ function initMap(){
     // set SF boundaries;
     var SFboundaries;
     var input = document.getElementById('input');
-    var slider = document.getElementById('slidecontainer');
+    var slider = document.getElementById('myRange');
+    var inputBoxSlider = document.getElementById('input-for-slide');
+
     //set up autocomplete box
     var field = new google.maps.places.Autocomplete(input);
     field.bindTo('bounds', map);
@@ -156,6 +158,12 @@ function initMap(){
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(slider);
 
+    slider.addEventListener("mouseup", updateInputBox);
+
+    function updateInputBox(){
+        inputBoxSlider.value = slider.value;
+         console.log(inputBoxSlider.value, " ", slider.value);
+    }
     //slider stuff
     //main area of functionality
     field.addListener("place_changed", function() {

@@ -21,6 +21,13 @@
                 width: 400px;
                 height: 20px;
             }
+
+            #input-for-slider{
+                margin: 30px 10px 0px 0px;
+                width: 400px;
+                height: 20px;
+            }
+
             .slidecontainer {
                 width: 30%; /* Width of the outside container */
             }
@@ -70,7 +77,13 @@
     <input id="input" type="text" class="form-control"></input>
     <div class="slidecontainer" id="slidecontainer">
         <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <div>
+            <input id="input-for-slide" type="text" class="form-control">
+        </div>
     </div>
+    <!--<div class="slidecontainer">
+        <input type=int class="form-control" id="input-for-slide"></input>
+    </div>-->
 	<div id="map"></div>
     <!-- TODO add Bootstrap to make input nicer -->
 
