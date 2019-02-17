@@ -3,6 +3,9 @@ import json
 import math
 from collections import defaultdict
 
+RADIUS_STEP = 500
+ACCIDENT_PER_STEP = 10
+
 """
     The "Haversine" formula:
     Calculates the great circle distance in miles between two locations given their respective
@@ -21,8 +24,8 @@ def haversine(long1, lat1, long2, lat2):
     long_difference = (long2 - long1)*math.pi/180
     lat_difference = (lat2 - lat1)*math.pi/180
 
-    # the radius of the earth in miles
-    earth_radius = 3956
+    # the radius of the earth in kilometers
+    earth_radius = 6371
 
     great_circle_distance = earth_radius * 2 * math.asin(math.sqrt(math.sin(lat_difference/2)**2 +
     math.cos(lat1_radians) * math.cos(lat2_radians) * math.sin(long_difference/2)**2))
@@ -48,13 +51,15 @@ def find_relevant_incidents(lng, lat, radius):
 
     relevant_incidents = defaultdict(dict)
     count = 0
+    limit = (radius/RADIUS_STEP) * ACCIDENT_PER_STEP
     for row in reader:
         # if the data set row is missing a latitude or longitude
         if row[24] == "" or row[23] == "":
             continue
         longitude = float(row[24])
         latitude = float(row[23])
-        if count < 10 and haversine(lng, lat, longitude, latitude) <= radius:
+        # convert radius from meters to kilometers
+        if count < limit and haversine(lng, lat, longitude, latitude) <= (radius/1000):
             count += 1
             incident_id = int(row[7])
             incident_date = row[1]
@@ -76,6 +81,6 @@ Creates a json file containing the relevant incident information
 based on the lng, lat, and radius given
 """
 def create_relevant_indicent_json(lng, lat, radius):
-    relevant_incident_dict = find_relevant_incidents(lng, lat, 1)
+    relevant_incident_dict = find_relevant_incidents(lng, lat, radius)
     with open('relevant_incidents.json', 'w') as file:
         json.dump(relevant_incident_dict, file)
