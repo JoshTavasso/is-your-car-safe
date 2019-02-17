@@ -40,9 +40,10 @@ function sendRequest(l) {
         data: JSON.stringify(location),
         success: function(data, textStatus, jqXHR) {
         },
+        async: false,
         contentType: "application/json",
         dataType: "json"
-    });
+     });
      $.get("/results", function(data) {
         incidents = JSON.parse(data);
 
@@ -218,7 +219,7 @@ function initMap(){
     field.addListener("place_changed", function() {
         var result = field.getPlace();
         if (!result.geometry) {
-            window.alert("No details available for input: '" + place.name + "'");
+            window.alert("No details available for input: '" + result.name + "'");
             return;
         } else {
             var p = new props(result.geometry.location.lat(), result.geometry.location.lng(), result.name);
