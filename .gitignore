@@ -5,3 +5,4 @@ __pycache__
 .vscode/
 venv
 relevant_incidents.json
+api.txt

@@ -50,3 +50,14 @@ Do you ever wonder if your car is safe after you parked?
     4d. Vehicle related incident data set will be stored in "vehicles.csv".
     
     5e. Remove "calls.csv" because it is a very large file. :)
+
+# RUNNING THE PROGRAM:
+
+1. Get a Google Maps API Key and add it to templates/map.html
+
+2. Run the following commands:
+
+    export FLASK_APP=app.py
+    flask run
+
+3. Go to the local server displayed: http://127.0.0.1:5000/
