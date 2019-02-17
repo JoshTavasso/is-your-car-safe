@@ -5,18 +5,92 @@ function props(newLat,newLng,newContent, iconURL)
     this.icon = iconURL
 };
 //Place object with lat and long
-var result;
 var markers = [];
 var circle;
-
+var map;
 function changeCircle() {
     if (circle != null) {
         slider = document.getElementById("myRange");
         circle.setRadius(parseInt(slider.value));
-        console.log(parseInt(slider.value));
+        sendRequest(circle.getCenter());
     }
+    //TODO change text box value
 }
-    //update circle
+
+function updateInputBox(){
+    var slider = document.getElementById("myRange")
+    inputBoxSlider.value = parseInt(slider.value);
+    slider.html = inputBoxSlider.value;
+    //TODO change slider value and slider position as well
+}
+
+function sendRequest(l) {
+    clearMarkers();
+    var location = l.toJSON();
+    location.radius = circle.getRadius();
+    $.ajax({
+        url: "/results",
+        type: "POST",
+        data: JSON.stringify(location),
+        success: function(data, textStatus, jqXHR) {
+        },
+        contentType: "application/json",
+        dataType: "json"
+    });
+
+     $.get("/results", function(data) {
+        incidents = JSON.parse(data);
+
+        for (var i in incidents) {
+            console.log(i);
+            p = new props(incidents[i].latitude, incidents[i].longitude, incidents[i].description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
+            addMarker(p);
+        }
+    });
+}
+function addMarker(props)
+{
+    var marker = new google.maps.Marker({
+    position: props.coords,
+    map: map,
+    //used to set a custom icon
+    icon: props.icon
+    });
+
+    //check content
+    if(props.information)
+    {
+        var infoWindow = new google.maps.InfoWindow({
+        content: props.information
+        });
+
+        marker.addListener('mouseover', function(){
+        infoWindow.open(map, marker)});
+
+        marker.addListener('mouseout', function(){
+            infoWindow.close();
+        });
+
+    }
+    markers.push(marker);
+    google.maps.event.addListener(infoWindow,'closeclick',function(){
+
+    });
+};
+function deleteMarkers(map)
+{
+    for(var i = 0; i < markers.length; ++i)
+    {
+        markers[i].setMap(map);
+    }
+
+};
+
+function clearMarkers()
+{
+    deleteMarkers(null);
+};
+
 function initMap(){
     //remove clutter on map
     var mapStyles = [
@@ -101,59 +175,8 @@ function initMap(){
         fullscreenControl: false,
         styles: mapStyles
     };
-    //creating a new map
     //set up strict bounds for map to SF
-    var map = new google.maps.Map(document.getElementById('map'), options);
-    //Array
-
-    //takes in props object
-    function addMarker(props)
-    {
-        //delete any existing markers
-        //zoom in on marker
-        //console.log(props.coords);
-        var marker = new google.maps.Marker({
-        position: props.coords,
-        map: map,
-        //used to set a custom icon
-        icon: props.icon
-        });
-
-        //check content
-        if(props.information)
-        {
-            var infoWindow = new google.maps.InfoWindow({
-            content: props.information
-            });
-
-            marker.addListener('mouseover', function(){
-            infoWindow.open(map, marker)});
-
-            marker.addListener('mouseout', function(){
-                infoWindow.close();
-            });
-
-        }
-        markers.push(marker);
-        google.maps.event.addListener(infoWindow,'closeclick',function(){
-
-        });
-        //map.removeEventListener("mousemove,")
-    };
-
-    function deleteMarkers(map)
-    {
-        for(var i = 0; i < markers.length; ++i)
-        {
-            markers[i].setMap(map);
-        }
-
-    };
-
-    function clearMarkers()
-    {
-        deleteMarkers(null);
-    };
+    map = new google.maps.Map(document.getElementById('map'), options);
     // set SF boundaries;
     var SFboundaries;
     var input = document.getElementById('input');
@@ -174,12 +197,6 @@ function initMap(){
         }
     });
 
-    function updateInputBox(){
-        var slider = document.getElementById("myRange");
-        inputBoxSlider.value = parseInt(slider.value);
-         console.log(inputBoxSlider.value, " ", slider.value);
-    }
-
     function updateSlider(e){
         if(e.key === "Enter"){
             var slider = document.getElementById("myRange");
@@ -188,16 +205,17 @@ function initMap(){
         }
     }
     //slider stuff
+
     //main area of functionality
     document.getElementById("myRange").addEventListener("mouseup", changeCircle);
     field.addListener("place_changed", function() {
-        result = field.getPlace();
+        var result = field.getPlace();
         if (!result.geometry) {
             window.alert("No details available for input: '" + place.name + "'");
             return;
         } else {
-            clearMarkers();
             var p = new props(result.geometry.location.lat(), result.geometry.location.lng(), result.name);
+            
             options.center = {lat: result.geometry.location.lat(), lng:result.geometry.location.lng()};
 
             map.setZoom(16);
@@ -223,31 +241,8 @@ function initMap(){
                         radius: 300
                     }
                 );
-            //set up JSON for flask to handle
-            var location = result.geometry.location.toJSON();
-            location.radius = circle.getRadius();
-            console.log(location);
-            //call Flask function - returns JSON
-            $.ajax({
-                url: "/results",
-                type: "POST",
-                data: JSON.stringify(location),
-                success: function(data, textStatus, jqXHR) {
-                },
-                contentType: "application/json",
-                dataType: "json"
-            });
-
-            var text = "default values";
-            var results = $.get("/results", function(data) {
-                incidents = JSON.parse(data);
-
-                for (var i in incidents) {
-                    console.log(i);
-                    p = new props(incidents[i].latitude, incidents[i].longitude, incidents[i].description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
-                    addMarker(p);
-                }
-            });
+            //populate circle with data
+            sendRequest(circle.getCenter());
         }
     });
 }
