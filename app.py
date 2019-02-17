@@ -18,7 +18,7 @@ def get_lat_long():
 	if request.method == 'POST':
 		jsdata = request.get_json(force=True)
 		print(jsdata)
-		GatherIncidents.create_relevant_indicent_json(float(jsdata["lng"]), float(jsdata["lat"]), 1)
+		GatherIncidents.create_relevant_indicent_json(float(jsdata["lng"]), float(jsdata["lat"]), float(jsdata["radius"]))
 		return 'OK'
 	else:
 		with open('relevant_incidents.json', 'r') as file:
