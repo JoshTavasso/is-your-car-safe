@@ -4,6 +4,15 @@
 
 Do you ever wonder if your car is safe after you parked?
 
+Using Google Maps API and an incident dataset located at https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-2018-to-Present/wg3w-h783, we created an application that can display incidents near your location and based on the number of incidents, we determine if your parking spot is safe or not!
+
+User can give their location, and the application shows them all vehicle-related incidents, given a radius,
+such as vehicle thefts.
+
+Implemented with HTML, CSS, Javascript, Python, and Flask. 
+
+Locations are limited to just San Francisco, CA. 
+
 # SETUP
 
 1. Clone this repository
