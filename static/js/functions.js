@@ -105,9 +105,9 @@ function initMap(){
         //console.log(props.coords);
         var marker = new google.maps.Marker({
         position: props.coords,
-        map: map
+        map: map,
         //used to set a custom icon
-        //icon:
+        icon: props.icon
         });
 
         //check content
@@ -202,8 +202,10 @@ function initMap(){
             var text = "default values";
             var results = $.get("/results", function(data) {
                 incidents = JSON.parse(data);
+
                 for (var i in incidents) {
-                    p = new props(parseFloat(i.latitude), parseFloat(i.longitude), i.description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
+                    console.log(i);
+                    p = new props(incidents[i].latitude, incidents[i].longitude, i.description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
                     addMarker(p);
                 }
             });
