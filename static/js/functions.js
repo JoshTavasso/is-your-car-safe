@@ -8,6 +8,15 @@ function props(newLat,newLng,newContent, iconURL)
 var result;
 var markers = [];
 var circle;
+
+function changeCircle() {
+    if (circle != null) {
+        slider = document.getElementById("myRange");
+        circle.setRadius(parseInt(slider.value));
+        console.log(parseInt(slider.value));
+    }
+}
+    //update circle
 function initMap(){
     //remove clutter on map
     var mapStyles = [
@@ -123,7 +132,7 @@ function initMap(){
             marker.addListener('mouseout', function(){
                 infoWindow.close();
             });
-            
+
         }
         markers.push(marker);
         google.maps.event.addListener(infoWindow,'closeclick',function(){
@@ -148,16 +157,17 @@ function initMap(){
     // set SF boundaries;
     var SFboundaries;
     var input = document.getElementById('input');
-    var slider = document.getElementById('slidecontainer');
+    var slide = document.getElementById('slidecontainer');
     //set up autocomplete box
     var field = new google.maps.places.Autocomplete(input);
     field.bindTo('bounds', map);
     field.setFields(['geometry', 'name']);
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(slider);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(slide);
 
     //slider stuff
     //main area of functionality
+    document.getElementById("myRange").addEventListener("mouseup", changeCircle);
     field.addListener("place_changed", function() {
         result = field.getPlace();
         if (!result.geometry) {
@@ -168,7 +178,7 @@ function initMap(){
             var p = new props(result.geometry.location.lat(), result.geometry.location.lng(), result.name);
             options.center = {lat: result.geometry.location.lat(), lng:result.geometry.location.lng()};
 
-            map.setZoom(18);
+            map.setZoom(16);
             map.panTo(options.center);
             //map = new google.maps.Map(document.getElementById('map'), options);
             addMarker(p);
@@ -194,6 +204,7 @@ function initMap(){
             //set up JSON for flask to handle
             var location = result.geometry.location.toJSON();
             location.radius = circle.getRadius();
+            console.log(location);
             //call Flask function - returns JSON
             $.ajax({
                 url: "/results",
@@ -217,5 +228,4 @@ function initMap(){
             });
         }
     });
-
 }
