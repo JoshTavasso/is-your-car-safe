@@ -2,6 +2,8 @@
 
 # IS YOUR CAR SAFE?
 
+Do you ever wonder if your car is safe after you parked?
+
 # SETUP
 
 1. Clone this repository
@@ -9,18 +11,26 @@
 2. Setup Virtual Environment:
     
     2a. Ensure pip is upgraded
+
         python3 -m pip install --user --upgrade pip
    
     2b. Install virtualenv
+
         MAC:
         python3 -m pip install --user virtualenv
+
         Windows:
+
         py -m pip install --user virtualenv
     
     2c. Create virtual environment
+
         MAC:
+
         python3 -m virtualenv venv
+
         Windows:
+
         py -m virtualenv env
 
 3. Install dependencies:
