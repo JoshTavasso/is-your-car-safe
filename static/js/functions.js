@@ -168,11 +168,24 @@ function initMap(){
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(slide);
 
     document.getElementById("myRange").addEventListener("mouseup", updateInputBox);
+    inputBoxSlider.addEventListener("keyup", function(event){
+        if(event.key === "Enter"){
+            console.log(inputBoxSlider.value);
+        }
+    });
 
     function updateInputBox(){
-        var slider = document.getElementById("myRange")
+        var slider = document.getElementById("myRange");
         inputBoxSlider.value = parseInt(slider.value);
          console.log(inputBoxSlider.value, " ", slider.value);
+    }
+
+    function updateSlider(e){
+        if(e.key === "Enter"){
+            var slider = document.getElementById("myRange");
+            slider.html = inputBoxSlider.value;
+            console.log(slider.value);
+        }
     }
     //slider stuff
     //main area of functionality
