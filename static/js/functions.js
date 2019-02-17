@@ -198,7 +198,15 @@ function initMap(){
             //     p = new Props(r.latitude, r.longitude, r.description);
             //     addMarker(p);
             // {% endfor %}
-            var results = $.get("/results");
+            var text = "default values";
+            var results = $.get("/results", function(data) {
+                console.log("Success");
+                for (var incident in data) {
+                    console.log(incident.category);
+                }
+
+            });
+            console.log("failure");
         }
     });
 

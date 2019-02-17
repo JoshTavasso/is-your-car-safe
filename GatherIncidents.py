@@ -5,7 +5,7 @@ from collections import defaultdict
 
 """
     The "Haversine" formula:
-    Calculates the great circle distance in miles between two locations given their respective 
+    Calculates the great circle distance in miles between two locations given their respective
     latitudes and longitudes in degrees.
     Formula from: https://en.wikipedia.org/wiki/Haversine_formula
 """
@@ -20,11 +20,11 @@ def haversine(long1, lat1, long2, lat2):
     # get the difference between the two locations and convert to radians
     long_difference = (long2 - long1)*math.pi/180
     lat_difference = (lat2 - lat1)*math.pi/180
-    
+
     # the radius of the earth in miles
     earth_radius = 3956
-    
-    great_circle_distance = earth_radius * 2 * math.asin(math.sqrt(math.sin(lat_difference/2)**2 + 
+
+    great_circle_distance = earth_radius * 2 * math.asin(math.sqrt(math.sin(lat_difference/2)**2 +
     math.cos(lat1_radians) * math.cos(lat2_radians) * math.sin(long_difference/2)**2))
 
     return great_circle_distance
@@ -36,7 +36,7 @@ def haversine(long1, lat1, long2, lat2):
     latitude and longitude.
 """
 def find_relevant_incidents(lng, lat, radius):
-    # read vehicle csv 
+    # read vehicle csv
     vehicle_info = open('vehicles.csv', mode='r')
 
     # skip header row of the csv file
@@ -47,14 +47,14 @@ def find_relevant_incidents(lng, lat, radius):
         next(reader)
 
     relevant_incidents = defaultdict(dict)
-
+    count = 0
     for row in reader:
         # if the data set row is missing a latitude or longitude
         if row[24] == "" or row[23] == "":
             continue
         longitude = float(row[24])
         latitude = float(row[23])
-        if haversine(lng, lat, longitude, latitude) <= radius:
+        if count < 10 and haversine(lng, lat, longitude, latitude) <= radius:
             incident_id = int(row[7])
             incident_date = row[1]
             incident_category = row[14]
@@ -66,7 +66,7 @@ def find_relevant_incidents(lng, lat, radius):
             relevant_incidents[incident_id]["description"] = incident_description
             relevant_incidents[incident_id]["longitude"] = incident_longitude
             relevant_incidents[incident_id]["latitude"] = incident_latitude
-    
+
     return relevant_incidents
 
 
@@ -78,4 +78,3 @@ def create_relevant_indicent_json(lng, lat, radius):
     relevant_incident_dict = find_relevant_incidents(lng, lat, 1)
     with open('relevant_incidents.json', 'w') as file:
         json.dump(relevant_incident_dict, file)
-    
