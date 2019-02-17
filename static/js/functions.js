@@ -5,7 +5,6 @@ function props(newLat,newLng,newContent, iconURL)
     this.icon = iconURL
 };
 //Place object with lat and long
-var result;
 var markers = [];
 var circle;
 var map;
@@ -13,18 +12,20 @@ function changeCircle() {
     if (circle != null) {
         slider = document.getElementById("myRange");
         circle.setRadius(parseInt(slider.value));
+        sendRequest(circle.getCenter());
     }
     //TODO change text box value
-    sendRequest(circle.getCenter());
 }
 
 function updateInputBox(){
     var slider = document.getElementById("myRange")
     inputBoxSlider.value = parseInt(slider.value);
+    slider.html = inputBoxSlider.value;
     //TODO change slider value and slider position as well
 }
 
 function sendRequest(l) {
+    clearMarkers();
     var location = l.toJSON();
     location.radius = circle.getRadius();
     $.ajax({
@@ -194,13 +195,13 @@ function initMap(){
     //main area of functionality
     document.getElementById("myRange").addEventListener("mouseup", changeCircle);
     field.addListener("place_changed", function() {
-        result = field.getPlace();
+        var result = field.getPlace();
         if (!result.geometry) {
             window.alert("No details available for input: '" + place.name + "'");
             return;
         } else {
-            clearMarkers();
             var p = new props(result.geometry.location.lat(), result.geometry.location.lng(), result.name);
+            
             options.center = {lat: result.geometry.location.lat(), lng:result.geometry.location.lng()};
 
             map.setZoom(16);
@@ -226,7 +227,8 @@ function initMap(){
                         radius: 300
                     }
                 );
+            //populate circle with data
+            sendRequest(circle.getCenter());
         }
-        sendRequest(result.geometry.location);
     });
 }
