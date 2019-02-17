@@ -117,10 +117,19 @@ function initMap(){
             content: props.information
             });
 
-            marker.addListener('click', function(){
+            marker.addListener('mouseover', function(){
             infoWindow.open(map, marker)});
+
+            marker.addListener('mouseout', function(){
+                infoWindow.close();
+            });
+            
         }
         markers.push(marker);
+        google.maps.event.addListener(infoWindow,'closeclick',function(){
+
+        });
+        //map.removeEventListener("mousemove,")
     };
 
     function deleteMarkers(map)
@@ -205,7 +214,7 @@ function initMap(){
 
                 for (var i in incidents) {
                     console.log(i);
-                    p = new props(incidents[i].latitude, incidents[i].longitude, i.description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
+                    p = new props(incidents[i].latitude, incidents[i].longitude, incidents[i].description, 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
                     addMarker(p);
                 }
             });
