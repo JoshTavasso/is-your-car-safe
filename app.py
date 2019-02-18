@@ -3,7 +3,7 @@ app.py
 The script used for deploying this app
 """
 from flask import Flask, request, render_template
-import GatherIncidents
+from modules import GatherIncidents
 import json
 
 app = Flask(__name__)
@@ -19,13 +19,12 @@ def get_lat_long():
 		jsdata = request.get_json(force=True)
 		print(jsdata)
 		GatherIncidents.create_relevant_indicent_json(float(jsdata["lng"]), float(jsdata["lat"]), float(jsdata["radius"]))
-		return 'OK'
+		return 'POST'
 	else:
 		with open('relevant_incidents.json', 'r') as file:
 			data = json.loads(file.read())
 		return json.dumps(data)
-
-
+		
 # running server/application
 if __name__ == '__main__':
 	app.run()

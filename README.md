@@ -13,7 +13,9 @@ Implemented with HTML, CSS, Javascript, Python, and Flask.
 
 Locations are limited to just San Francisco, CA. 
 
-URL: in progress
+# APP DEMO:
+
+In Progress
 
 # SETUP
 
@@ -54,11 +56,11 @@ URL: in progress
     
     4a. Export csv file of all police incidents from https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-2018-to-Present/wg3w-h783
     
-    4b. Put csv file into project folder and rename to "calls.csv".
+    4b. Put csv file into the main project directory and rename to "calls.csv".
     
-    4c. Run python BuildDataSet.py
+    4c. Run python modules/BuildDataSet.py
     
-    4d. Vehicle related incident data set will be stored in "vehicles.csv".
+    4d. Vehicle related incident data set should now be stored in "vehicles.csv", located in the main project directory
     
     5e. Remove "calls.csv" because it is a very large file. :)
 

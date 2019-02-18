@@ -1,3 +1,8 @@
+"""
+GatherIncidents.py
+Used for gathering incidents from the vehicles dataset
+"""
+
 import csv
 import json
 import math
@@ -71,8 +76,8 @@ def find_relevant_incidents(lng, lat, radius):
 
 
 """
-Creates a json file containing the relevant incident information
-based on the lng, lat, and radius given
+    Creates a json file containing the relevant incident information
+    based on the lng, lat, and radius given
 """
 def create_relevant_indicent_json(lng, lat, radius):
     relevant_incident_dict = find_relevant_incidents(lng, lat, radius)
