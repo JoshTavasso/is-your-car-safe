@@ -17,7 +17,7 @@ Frameworks: Flask
 
 API: Google Maps API
 
-# DEPLOYED @ (Temporarily):
+# Deployed @ (Temporarily):
 
 https://isyourcarsafe.pythonanywhere.com/
 
