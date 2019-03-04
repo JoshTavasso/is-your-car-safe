@@ -11,11 +11,11 @@ Locations are limited to just San Francisco, CA.
 
 # Built With
 
-Languages: HTML, CSS, Javascript, Python
+* Languages: HTML, CSS, Javascript, Python
 
-Frameworks: Flask
+* [Flask](http://flask.pocoo.org/) - Web development framework for Python
 
-API: Google Maps API
+* [Google Maps API](https://developers.google.com/maps/documentation/)
 
 # Deployed @ (Temporarily):
 
@@ -25,13 +25,13 @@ https://isyourcarsafe.pythonanywhere.com/
 
 Implemented at HackUCI 2019 by:
 
-Joshua Tavassolikhah
+* **Josh Tavassolikhah** - [JoshTavasso](https://github.com/JoshTavasso)
 
-David Yip
+* **Justin Leong** - [justinleong360](https://github.com/justinleong360)
 
-Justin Leong
+* **David Yip** - [davidyip50](https://github.com/davidyip50)
 
-Joseph Medina.
+* **Joseph Medina** - [sephmedina](https://github.com/sephmedina)
 
 # SETUP (If you would like to modify this project):
 
