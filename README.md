@@ -1,5 +1,3 @@
-# HackUCI2019
-
 # IS YOUR CAR SAFE?
 
 Do you ever wonder if your car is safe after you parked?
