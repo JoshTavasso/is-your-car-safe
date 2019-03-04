@@ -5,15 +5,33 @@ Do you ever wonder if your car is safe after you parked?
 Using Google Maps API and an incident dataset located at https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-2018-to-Present/wg3w-h783, we created a web application that can display incidents near your location and based on the number of incidents, we determine if your parking spot is safe or not!
 
 User can input their location and the application shows them all vehicle-related incidents
-such as vehicle thefts.
-
-Implemented with HTML, CSS, Javascript, Python, and Flask. 
+such as vehicle thefts. 
 
 Locations are limited to just San Francisco, CA. 
+
+# Built With
+
+Languages: HTML, CSS, Javascript, Python
+
+Frameworks: Flask
+
+API: Google Maps API
 
 # DEPLOYED @ (Temporarily):
 
 https://isyourcarsafe.pythonanywhere.com/
+
+# Authors
+
+Implemented at HackUCI 2019 by:
+
+Joshua Tavassolikhah
+
+David Yip
+
+Justin Leong
+
+Joseph Medina.
 
 # SETUP (If you would like to modify this project):
 
@@ -80,6 +98,4 @@ https://isyourcarsafe.pythonanywhere.com/
 
 3. Go to the local server displayed: http://127.0.0.1:5000/
 
-# Notes
 
-Implemented at HackUCI 2019 by Joshua Tavassolikhah, David Yip, Justin Leong, and Joseph Medina.
