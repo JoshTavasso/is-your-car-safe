@@ -13,11 +13,11 @@ Implemented with HTML, CSS, Javascript, Python, and Flask.
 
 Locations are limited to just San Francisco, CA. 
 
-# URL:
+# DEPLOYED @ (Temporarily):
 
 https://isyourcarsafe.pythonanywhere.com/
 
-# SETUP
+# SETUP (If you would like to modify this project):
 
 1. Clone this repository
 
@@ -29,7 +29,8 @@ https://isyourcarsafe.pythonanywhere.com/
    
     2b. Install virtualenv
 
-        MAC:
+        MAC/Linux:
+        
         python3 -m pip install --user virtualenv
 
         Windows:
@@ -38,7 +39,7 @@ https://isyourcarsafe.pythonanywhere.com/
     
     2c. Create virtual environment
 
-        MAC:
+        MAC/Linux:
 
         python3 -m virtualenv venv
 
@@ -48,9 +49,13 @@ https://isyourcarsafe.pythonanywhere.com/
 
 3. Install dependencies:
     
-    3a. Activate virtualenv: source venv/bin/activate
+    3a. Activate virtualenv: 
     
-    3b. pip install -r requirements.txt
+        source venv/bin/activate
+    
+    3b. Install dependencies:
+        
+        pip install -r requirements.txt
 
 4. Retrieve updated vehicle related incident data set:
     
@@ -58,9 +63,11 @@ https://isyourcarsafe.pythonanywhere.com/
     
     4b. Put csv file into the main project directory and rename to "calls.csv".
     
-    4c. Run python modules/BuildDataSet.py
+    4c. Run BuildDataSet.py to create the dataset needed:
+        
+        python modules/BuildDataSet.py
     
-    4d. Vehicle related incident data set should now be stored in "vehicles.csv", located in the main project directory
+    4d. Vehicle related incident dataset should now be stored in "vehicles.csv", located in the main project directory
     
     5e. Remove "calls.csv" because it is a very large file. :)
 
@@ -69,9 +76,12 @@ https://isyourcarsafe.pythonanywhere.com/
 1. Get a Google Maps API Key and add it to templates/map.html
 
 2. Run the following commands:
-
-    export FLASK_APP=app.py
     
-    flask run
+        export FLASK_APP=app.py
+        flask run
 
 3. Go to the local server displayed: http://127.0.0.1:5000/
+
+# Notes
+
+Implemented at HackUCI 2019 by Joshua Tavassolikhah, David Yip, Justin Leong, and Joseph Medina.
